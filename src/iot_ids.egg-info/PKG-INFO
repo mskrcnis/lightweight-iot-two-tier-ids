@@ -1,0 +1,11 @@
+Metadata-Version: 2.4
+Name: iot-ids
+Version: 0.1.0
+Summary: Lightweight IoT Intrusion Detection System
+Author: S Kumar Reddy Mallidi
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+
+# Lightweight IoT IDS
+
+Research codebase for a lightweight intrusion detection system for IoT/IIoT networks.

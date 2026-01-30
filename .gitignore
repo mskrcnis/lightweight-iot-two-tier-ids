@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+
+# Data
+data/raw/
+data/processed/
+*.csv
+*.npz
+
+# Models
+*.h5
+*.keras
+*.ckpt
+
+# Logs & plots
+*.log
+*.png
+*.jpg
+*.pdf
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

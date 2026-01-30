@@ -1,35 +1,40 @@
-# Lightweight IoT Intrusion Detection System
+# Two-Tier Lightweight IoT Intrusion Detection System (IDS)
 
-This repository contains the implementation of a **multi-level lightweight Intrusion Detection System (IDS)** for IoT/IIoT networks, developed as part of PhD research.
+This repository contains the implementation of a **two-tier lightweight IDS for IoT/IIoT networks**, developed as part of PhD research.
 
-The project emphasizes **feature efficiency, modular design, and reproducibility**, targeting both **edge** and **cloud** deployment scenarios.
+**Architecture (core idea):**
+- **Edge tier (lightweight decision):** BBFS *(wrapper)* feature selection + **Logistic Regression** (CPU-only, scikit-learn)
+- **Cloud tier (high-capacity refinement):** BBFS *(filter)* feature selection + **HGS-Optimized 1D-CNN** (TensorFlow CPU)
+
+The design targets **resource-constrained edge environments** while enabling **stronger cloud-level detection** using optimized deep learning.
 
 ---
 
 ## Pipeline Overview
 
-### 1. Data Preparation
-- Interactive preprocessing
-- Dataset selection from `data/raw`
-- Stratified sampling (full or fractional)
-- Feature normalization (train-only fit)
-- Class imbalance handling:
+### 1) Data Preparation (Interactive)
+- Dataset selection from `data/raw` (or browse path)
+- Optional **stratified fraction loading** (demo mode)
+- Column inspection + additional drop columns
+- Train/Test split (stratified)
+- Normalization (fit on train, transform test)
+- Optional balancing on **train only**:
   - SMOTE
   - SMOTE + ENN
   - SMOTE + ENN + LOF
 
-### 2. Edge Layer (Lightweight IDS)
-- Bowerbird Courtship-Inspired Feature Selection (BBFS – Wrapper)
-- Logistic Regression (CPU-only, scikit-learn)
-- Designed for low-resource IoT edge devices
+### 2) Edge Tier: BBFS-Wrapper + Logistic Regression
+- Wrapper-based BBFS searches feature subsets using a Logistic Regression evaluator
+- Prints **iteration-wise and agent-wise** feature subsets and fitness
+- Produces a selected feature set for lightweight edge inference
 
-### 3. Cloud Layer (Advanced IDS)
-- BBFS Filter using:
+### 3) Cloud Tier: BBFS-Filter + HGS-Optimized 1D-CNN
+- Filter-based BBFS using:
   - Conditional Mutual Information (CMI)
-  - Fisher Score
-  - Correlation Penalty
-- Base 1D-CNN for traffic classification
-- HGS-Optimized 1D-CNN (Hunger Games Search for hyperparameter tuning)
+  - Fisher score
+  - Correlation penalty
+- Selected features are passed to an **HGS-optimized 1D-CNN** training routine
+- Designed for stronger detection capacity at the cloud tier
 
 ---
 
@@ -44,7 +49,6 @@ lightweight-iot-ids/
 │   │   └── edge_bbfs_lr.py
 │   └── cloud/
 │       ├── cloud_bbfs_filter.py
-│       ├── cloud_cnn_train.py
 │       └── cloud_hgs_cnn_train.py
 │
 ├── data/
@@ -69,52 +73,46 @@ pip install -r requirements.txt
 
 ## Usage
 
-### Edge-Level IDS
+### Edge Tier (BBFS-Wrapper + Logistic Regression)
 ```bash
 python scripts/edge/edge_bbfs_lr.py
 ```
 
-### Cloud-Level CNN
-```bash
-python scripts/cloud/cloud_cnn_train.py
-```
-
-### Cloud-Level HGS-Optimized CNN
+### Cloud Tier (BBFS-Filter + HGS-Optimized 1D-CNN)
 ```bash
 python scripts/cloud/cloud_hgs_cnn_train.py
 ```
 
-Each script is **interactive** and guides the user through:
-- Dataset loading
-- Preprocessing
-- Feature selection
-- Model training and evaluation
+Each script is **interactive** and guides you through:
+- Loading NPZ **or** running raw-data preprocessing
+- Feature selection (BBFS wrapper/filter)
+- Training + evaluation
 
 ---
 
-## Notes
-
-- Datasets are **not included** due to size and licensing constraints.
-- Prepared data (`.npz`), trained models, and plots are excluded via `.gitignore`.
-- All experiments are CPU-compatible (no CUDA required).
+## Notes (Important)
+- **Datasets are not included** due to size/licensing constraints.
+- Prepared arrays (`.npz`), trained models, and large artifacts should remain excluded via `.gitignore`.
+- The implementation is **CPU-compatible** (no CUDA required).
 
 ---
 
 ## Reproducibility
-
-- Random seeds are configurable
+- Random seeds are configurable in interactive prompts
 - Intermediate outputs can be saved as `.npz`
-- Modular scripts allow independent execution of each pipeline stage
+- The two tiers are modular and can be executed independently
+
+---
+
+## Contact
+For academic collaboration/questions: **satya.cnis@gmail.com**
 
 ---
 
 ## License
-
-This project is intended for academic and research use.  
-Add a license file (e.g., MIT, Apache 2.0) if redistribution is planned.
+MIT (see `LICENSE`).
 
 ---
 
 ## Citation
-
-If you use this code in your research, please cite the corresponding journal article or thesis (to be updated).
+If you use this repository in academic work, please cite it using the metadata in `CITATION.cff`.

@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this software in your research, please cite it using this metadata."
+title: "Two-Tier Lightweight IoT IDS: BBFS-Wrapper Edge Logistic Regression and BBFS-Filter HGS-Optimized 1D-CNN Cloud Model"
+type: software
+version: 1.0.0
+date-released: 2026-01-30
+license: MIT
+authors:
+  - family-names: "Mallidi"
+    given-names: "S Kumar Reddy"
+    email: "satya.cnis@gmail.com"
+keywords:
+  - intrusion detection
+  - IDS
+  - IoT
+  - IIoT
+  - two-tier
+  - edge computing
+  - cloud computing
+  - feature selection
+  - BBFS
+  - logistic regression
+  - 1D CNN
+  - HGS
+  - SMOTE
+  - imbalanced learning
+repository-code: "https://github.com/<YOUR_GITHUB_USERNAME>/lightweight-iot-ids"

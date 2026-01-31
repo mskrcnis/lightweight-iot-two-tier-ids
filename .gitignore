@@ -9,10 +9,12 @@ __pycache__/
 venv/
 
 # Data
-data/raw/
-data/processed/
-*.csv
-*.npz
+# Allow raw data
+!data/raw/*
+#Avoid remaining
+data/processed/*
+data/raw/*
+data/processed/*
 
 # Models
 *.h5
